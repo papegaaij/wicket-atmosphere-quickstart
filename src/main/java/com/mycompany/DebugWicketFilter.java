@@ -9,6 +9,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.wicket.protocol.http.WicketFilter;
 import org.slf4j.Logger;
@@ -21,7 +22,7 @@ public class DebugWicketFilter extends WicketFilter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
-		log.info(request.toString());
+		log.info("URI: " + request.toString());
 		StringBuilder sb = new StringBuilder("{");
 		boolean first = true;
 		for (Object curEntry : request.getParameterMap().entrySet()) {
@@ -33,7 +34,8 @@ public class DebugWicketFilter extends WicketFilter {
 			first = false;
 		}
 		sb.append("}");
-		log.info(sb.toString());
+		log.info("PAR: " + sb.toString());
+		log.info("QUE: " + ((HttpServletRequest) request).getQueryString());
 		super.doFilter(request, response, chain);
 	}
 }
