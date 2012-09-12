@@ -43,9 +43,25 @@
 	<properties>
 		<wicket.version>6.0.0</wicket.version>
 		<wicket.atmosphere.version>0.3</wicket.atmosphere.version>
+		<atmosphere.version>1.0.0.RC1</atmosphere.version>
 		<jetty.version>7.6.3.v20120416</jetty.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.atmosphere</groupId>
+				<artifactId>atmosphere-runtime</artifactId>
+				<version>${atmosphere.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.atmosphere</groupId>
+						<artifactId>atmosphere-compat-jetty</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
