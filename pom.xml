@@ -44,7 +44,7 @@
 		<wicket.version>6.4.0-SNAPSHOT</wicket.version>
 		<wicket.atmosphere.version>0.6-SNAPSHOT</wicket.atmosphere.version>
 		<atmosphere.version>1.0.4</atmosphere.version>
-		<jetty.version>7.6.3.v20120416</jetty.version>
+		<jetty.version>8.1.8.v20121106</jetty.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencyManagement>
@@ -73,6 +73,12 @@
 			<artifactId>wicket-atmosphere</artifactId>
 			<version>${wicket.atmosphere.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
 
 
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
@@ -97,10 +103,16 @@
 
 		<!--  JETTY DEPENDENCIES FOR TESTING  -->
 		<dependency>
-			<groupId>org.eclipse.jetty.aggregate</groupId>
-			<artifactId>jetty-all-server</artifactId>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-plus</artifactId>
 			<version>${jetty.version}</version>
-			<scope>provided</scope>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-websocket</artifactId>
+			<version>${jetty.version}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<build>
