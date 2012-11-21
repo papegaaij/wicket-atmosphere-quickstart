@@ -41,9 +41,9 @@
 		</license>
 	</licenses>
 	<properties>
-		<wicket.version>6.0.0</wicket.version>
-		<wicket.atmosphere.version>0.3</wicket.atmosphere.version>
-		<atmosphere.version>1.0.0.RC1</atmosphere.version>
+		<wicket.version>6.3.0</wicket.version>
+		<wicket.atmosphere.version>0.5</wicket.atmosphere.version>
+		<atmosphere.version>1.0.4</atmosphere.version>
 		<jetty.version>7.6.3.v20120416</jetty.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
