@@ -22,51 +22,56 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.wicket.Application;
+import org.apache.wicket.Page;
 import org.apache.wicket.atmosphere.EventBus;
+import org.apache.wicket.atmosphere.ResourceRegistrationListener;
 import org.apache.wicket.protocol.http.WebApplication;
 
 /**
- * Application object for your web application. If you want to run this application without
- * deploying, run the Start class.
+ * Application object for your web application. If you want to run this
+ * application without deploying, run the Start class.
  */
-public class WicketApplication extends WebApplication
-{
+public class WicketApplication extends WebApplication {
 	private EventBus eventBus;
 
 	@Override
-	public Class<HomePage> getHomePage()
-	{
+	public Class<HomePage> getHomePage() {
 		return HomePage.class;
 	}
 
-	public EventBus getEventBus()
-	{
+	public EventBus getEventBus() {
 		return eventBus;
 	}
 
-	public static WicketApplication get()
-	{
-		return (WicketApplication)Application.get();
+	public static WicketApplication get() {
+		return (WicketApplication) Application.get();
 	}
 
 	@Override
-	public void init()
-	{
+	public void init() {
 		super.init();
 		eventBus = new EventBus(this);
+		eventBus.addRegistrationListener(new ResourceRegistrationListener() {
 
-		ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-		final Runnable beeper = new Runnable()
-		{
 			@Override
-			public void run()
-			{
-				try
-				{
+			public void resourceUnregistered(String uuid) {
+				System.out.println("Unregistered " + uuid);
+			}
+
+			@Override
+			public void resourceRegistered(String uuid, Page page) {
+				System.out.println("Registered " + uuid);
+			}
+		});
+
+		ScheduledExecutorService scheduler = Executors
+				.newScheduledThreadPool(1);
+		final Runnable beeper = new Runnable() {
+			@Override
+			public void run() {
+				try {
 					eventBus.post(new Date());
-				}
-				catch (Exception e)
-				{
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
