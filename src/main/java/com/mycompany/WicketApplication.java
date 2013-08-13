@@ -19,12 +19,14 @@ package com.mycompany;
 import java.util.Date;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Page;
 import org.apache.wicket.atmosphere.EventBus;
 import org.apache.wicket.atmosphere.ResourceRegistrationListener;
+import org.apache.wicket.atmosphere.config.AtmosphereLogLevel;
 import org.apache.wicket.protocol.http.WebApplication;
 
 /**
@@ -51,6 +53,7 @@ public class WicketApplication extends WebApplication {
 	public void init() {
 		super.init();
 		eventBus = new EventBus(this);
+		eventBus.getParameters().setLogLevel(AtmosphereLogLevel.DEBUG);
 		eventBus.addRegistrationListener(new ResourceRegistrationListener() {
 
 			@Override
@@ -64,8 +67,15 @@ public class WicketApplication extends WebApplication {
 			}
 		});
 
-		ScheduledExecutorService scheduler = Executors
-				.newScheduledThreadPool(1);
+		ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(
+				1, new ThreadFactory() {
+					@Override
+					public Thread newThread(Runnable r) {
+						Thread ret = new Thread(r);
+						ret.setDaemon(true);
+						return ret;
+					}
+				});
 		final Runnable beeper = new Runnable() {
 			@Override
 			public void run() {
